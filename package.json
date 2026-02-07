@@ -1,5 +1,5 @@
 {
-  "name": "npm-react-package-template",
+  "name": "react-freemium-ads",
   "version": "0.0.1",
   "private": false,
   "type": "module",
@@ -31,7 +31,7 @@
   "author": "tuki0918",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tuki0918/NPM-REACT-PACKAGE-TEMPLATE.git"
+    "url": "https://github.com/tuki0918/react-freemium-ads.git"
   },
   "publishConfig": {
     "access": "public"

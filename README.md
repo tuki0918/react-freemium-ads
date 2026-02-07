@@ -1,4 +1,4 @@
-# NPM-REACT-PACKAGE-TEMPLATE
+# react-freemium-ads
 
 ## Setup
 
