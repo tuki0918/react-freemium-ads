@@ -1,41 +1,53 @@
 # react-freemium-ads
 
-## Setup
+This package provides a freemium ads module (AdProvider, AdSlot) for route-based ad control and disabling ads for premium users.
 
-1. Run `npm ci`
-2. Update `package.json`
-    - Required updates: `name`, `license`, `author`, `repository`
-3. Update `LICENSE`
-    - Required updates: `author`
+## Usage Example (Freemium Ads)
 
-## Development
+```tsx
+import { AdProvider, AdSlot } from "react-freemium-ads";
 
-```bash
-# test
-npm run test
-# format
-npm run lint:fix
+type AppProps = {
+  isPremium: boolean;
+  pathname: string;
+};
+
+export function App({ isPremium, pathname }: AppProps) {
+  return (
+    <AdProvider
+      plan={isPremium ? "premium" : "free"}
+      currentPath={pathname}
+      config={{
+        adClient: "ca-pub-xxxxxxxxxxxxxxxx",
+        slots: {
+          banner: "1111111111",
+          multiplex: "2222222222",
+        },
+        allowedPaths: ["/", "/search", "/result"],
+        blockedPaths: [
+          "/checkout",
+          "/billing",
+          "/account",
+          "/login",
+          "/privacy",
+          "/terms",
+        ],
+      }}
+    >
+      <header>
+        <AdSlot placement="banner" />
+      </header>
+
+      <main>
+        {/* Your search/result UI */}
+        <AdSlot placement="multiplex" />
+      </main>
+    </AdProvider>
+  );
+}
 ```
 
-## First Release (Manual)
-
-```bash
-npm run build
-npm pack   # verify package contents before publishing
-
-npm login
-npm publish
-```
-
-## Next Releases (Recommended: Trusted Publishing)
-
-[Trusted publishing for npm packages](https://docs.npmjs.com/trusted-publishers)
-
-One-time setup:
-1. Open the npm package settings and configure an OIDC trusted publisher for this repository/workflow.
-
-For each release:
-1. Increase the package version (`npm version patch|minor|major`).
-2. Push the commit and tag (`git push && git push --tags`).
-3. Create a GitHub Release from that tag.  
-   This repository's `.github/workflows/npm-publish.yml` runs tests/build and publishes to npm on release creation.
+Notes:
+1. `premium` users do not load the AdSense script.
+2. Use `allowedPaths` / `blockedPaths` to control ad visibility by route.
+3. Use AdSense dashboard settings for Anchor/Vignette behavior.
